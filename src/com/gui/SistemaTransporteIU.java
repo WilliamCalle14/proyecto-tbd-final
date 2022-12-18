@@ -4,13 +4,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class SistemaTransporteIU extends JFrame {
-	private static SistemaTransporteIU sistema;
 	private static final long serialVersionUID = 1L;
+	private JPanel panelContenedor;
 	private PanelPrincipal panelPrincipal;
 	private PanelCliente panelCliente;
-	private JPanel panelContenedor;
+	
+	private ControlPanelBoton control;
 
-	private SistemaTransporteIU() {
+	public SistemaTransporteIU() {
 		super("Sistema Transporte - Trans Bolivia");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(650, 430);
@@ -18,16 +19,12 @@ public class SistemaTransporteIU extends JFrame {
 		getContentPane().setLayout(null);
 		setResizable(false);
 		
+		control = ControlPanelBoton.obtenerInstancia();
+		control.agregarSistema(this);
 		panelPrincipal = new PanelPrincipal();
-		panelCliente = PanelCliente.getInstance();
+		panelCliente = new PanelCliente();
 		
 		hacerPanelContenedor();
-	}
-	
-	public static SistemaTransporteIU getInstance() {
-		if (sistema == null)
-			sistema = new SistemaTransporteIU();
-		return sistema;
 	}
 	
 	void hacerPanelContenedor() {
