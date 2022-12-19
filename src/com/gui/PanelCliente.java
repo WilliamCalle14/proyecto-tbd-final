@@ -29,6 +29,7 @@ class PanelCliente extends JPanel {
 	private JTextField campoTelefono;
 	private JList<Object> listaTelefonos;
 	private DefaultListModel<Object> modelo;
+	private String clienteSeleccionado = "Preferencial";
 	
 	private ControlPanelBoton control;
 	private ControlComponentes controlComponentes;
@@ -122,6 +123,8 @@ class PanelCliente extends JPanel {
 	void agregarTelefonoAlista() {
 		modelo.addElement(campoTelefono.getText());
 		listaTelefonos.repaint();
+		campoTelefono.setText("");
+		campoTelefono.repaint();
 	}
 	
 	void hacerBotones() {
@@ -142,6 +145,7 @@ class PanelCliente extends JPanel {
 	}
 	
 	void cambiarPanelClientePreferencial() {
+		clienteSeleccionado = tiposCliente[0];
 		etiquetaIdCliente.setText("NIT");
 		etiquetaNombre.setText("Nombre Empresa");
 		etiquetaApellido.setVisible(false);
@@ -150,6 +154,7 @@ class PanelCliente extends JPanel {
 	}
 	
 	void cambiarPanelClienteNormal() {
+		clienteSeleccionado = tiposCliente[1];
 		etiquetaIdCliente.setText("CI");
 		etiquetaNombre.setText("Nombre");
 		etiquetaApellido.setVisible(true);
@@ -159,5 +164,40 @@ class PanelCliente extends JPanel {
 	
 	String[] obtenerTiposCliente() {
 		return tiposCliente;
+	}
+	
+	void limpiarCampos() {
+		campoIdCliente.setText("");
+		campoNombre.setText("");
+		campoApellidos.setText("");
+		campoDireccion.setText("");
+		campoTelefono.setText("");
+		modelo.removeAllElements();
+		listaTelefonos.removeAll();
+		repaint();
+	}
+
+	JTextField getCampoIdCliente() {
+		return campoIdCliente;
+	}
+
+	JTextField getCampoNombre() {
+		return campoNombre;
+	}
+
+	JTextField getCampoDireccion() {
+		return campoDireccion;
+	}
+
+	JTextField getCampoApellidos() {
+		return campoApellidos;
+	}
+
+	Object[] getListaTelefonos() {
+		return modelo.toArray();
+	}
+	
+	String getClienteSeleccionado() {
+		return clienteSeleccionado;
 	}
 }
