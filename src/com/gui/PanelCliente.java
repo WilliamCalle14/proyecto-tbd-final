@@ -5,9 +5,12 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 
 import javax.swing.DefaultListModel;
+import javax.swing.InputVerifier;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -65,6 +68,24 @@ class PanelCliente extends JPanel {
 		
 		campoIdCliente = new JTextField();
 		campoIdCliente.setBounds(127, 58, 159, 28);
+		campoIdCliente.setInputVerifier(new InputVerifier() {
+			@Override
+			public boolean verify(JComponent input) {
+				JTextField campo = (JTextField) input;
+				try {
+					Integer.valueOf(campo.getText());
+				} catch (NumberFormatException e) {
+					if (!campo.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(PanelCliente.this, 
+								"Este campo solo debe contener numeros",
+								"Entrada Incorrecta", JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+				}
+				return true;
+			}
+		});
+		campoIdCliente.setVerifyInputWhenFocusTarget(true);
 		add(campoIdCliente);
 		campoIdCliente.setColumns(10);
 		
@@ -103,6 +124,24 @@ class PanelCliente extends JPanel {
 		
 		campoTelefono = new JTextField();
 		campoTelefono.setBounds(127, 193, 122, 28);
+		campoTelefono.setInputVerifier(new InputVerifier() {
+			@Override
+			public boolean verify(JComponent input) {
+				JTextField campo = (JTextField) input;
+				try {
+					Integer.valueOf(campo.getText());
+				} catch (NumberFormatException e) {
+					if (!campo.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(PanelCliente.this, 
+								"Este campo solo debe contener numeros",
+								"Entrada Incorrecta", JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+				}
+				return true;
+			}
+		});
+		campoTelefono.setVerifyInputWhenFocusTarget(true);
 		add(campoTelefono);
 		campoTelefono.setColumns(10);
 		

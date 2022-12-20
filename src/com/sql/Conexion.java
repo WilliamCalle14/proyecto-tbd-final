@@ -5,24 +5,24 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
+	protected Connection conexion;
 	private String usuario;
 	private String contrasena;
-	private String nombreHost;
-	private String puerto;
-	private String nombreBD;
 	private String nombreBDUrl;
 	
-	public Conexion(String usuario, String contrasena, String nombreHost, String puerto, String nombreBD) {
-		this.usuario = usuario;
-		this.contrasena = contrasena;
-		this.nombreHost = nombreHost;
-		this.puerto = puerto;
-		this.nombreBD = nombreBD;
-		nombreBDUrl = "jdbc:mysql://" + this.nombreHost + ":" + this.puerto + "/" + this.nombreBD;
+	public Conexion() {
+		this.usuario = "root";
+		this.contrasena = "mysql4080";
+		nombreBDUrl = "jdbc:mysql://localhost/Trans_Bolivia";
 	}
 	
-	public Connection obtenerConexion() throws SQLException, ClassNotFoundException {
+	public void iniciarConexion() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		return DriverManager.getConnection(nombreBDUrl, usuario, contrasena);
+		conexion = DriverManager.getConnection(nombreBDUrl, usuario, contrasena);
+	}
+	
+	public void cerrarConexion() throws SQLException {
+		if (conexion != null && !conexion.isClosed())
+			conexion.close();
 	}
 }

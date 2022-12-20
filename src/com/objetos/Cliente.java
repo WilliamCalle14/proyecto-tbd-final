@@ -6,15 +6,6 @@ public class Cliente {
 	private String direccionCliente;
 	private String tipoCliente;
 	private String[] telefonos;
-	
-	public Cliente(int ciCliente, String nombreCliente, String direccionCliente, String tipoCliente,
-			String[] telefonos) {
-		this.ciCliente = ciCliente;
-		this.nombreCliente = nombreCliente;
-		this.direccionCliente = direccionCliente;
-		this.tipoCliente = tipoCliente;
-		this.telefonos = telefonos;
-	}
 
 	public int getCiCliente() {
 		return ciCliente;
@@ -55,6 +46,4 @@ public class Cliente {
 	public void setTelefonos(String[] telefonos) {
 		this.telefonos = telefonos;
 	}
-	
-	
 }
