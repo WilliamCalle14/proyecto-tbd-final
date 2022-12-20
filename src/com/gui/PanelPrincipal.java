@@ -11,14 +11,13 @@ class PanelPrincipal extends JPanel {
 	static final String ID_PANEL_CLIENTE = "CLIENTE";
 	static final String ID_PANEL_CONTRATO = "CONTRATO";
 	
-	private ControlPanelBoton control;
+	private ControlMouse control;
 	
 	PanelPrincipal() {
 		setBounds(0, 0, 622, 379);
 		setLayout(null);
 		
-		control = ControlPanelBoton.obtenerInstancia();
-		control.agregarPanelPrincipal(this);
+		control = ControlMouse.obtenerInstancia();
 	
 		Image imagenCliente = Toolkit.getDefaultToolkit().getImage(PanelPrincipal.class.getResource("/resources/3126649.png"));
 		JPanel panelBtnCliente = FabricaPanelBoton.obtenerBotonConIconoTexto(51, 118, 128, 143, 6, imagenCliente, "Clientes", SystemColor.inactiveCaption, ID_PANEL_CLIENTE);

@@ -7,22 +7,26 @@ public class SistemaTransporteIU extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel panelContenedor;
 	private PanelPrincipal panelPrincipal;
-	private PanelCliente panelCliente;
+	private ClienteIU clienteIU;
+	private RegistroCliente panelCliente;
+	private ContratoIU contratoIU;
 	
-	private ControlPanelBoton control;
+	private ControlMouse control;
 
 	public SistemaTransporteIU() {
-		super("Sistema Transporte - Trans Bolivia");
+		super("Sistema de Transporte - Trans Bolivia");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(650, 430);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		setResizable(false);
 		
-		control = ControlPanelBoton.obtenerInstancia();
+		control = ControlMouse.obtenerInstancia();
 		control.agregarSistema(this);
 		panelPrincipal = new PanelPrincipal();
-		panelCliente = new PanelCliente();
+		panelCliente = new RegistroCliente();
+		clienteIU = new ClienteIU();
+		contratoIU = new ContratoIU();
 		
 		hacerPanelContenedor();
 	}
@@ -35,17 +39,28 @@ public class SistemaTransporteIU extends JFrame {
 		getContentPane().add(panelContenedor);
 	}
 	
-	void cambiarPanelPrincipal() {
+	private void cambiarPanel(JPanel panel) {
 		panelContenedor.removeAll();
-		panelContenedor.add(panelPrincipal);
+		panelContenedor.add(panel);
 		panelContenedor.revalidate();
 		panelContenedor.repaint();
 	}
 	
-	void cambiarPanelClientes() {
-		panelContenedor.removeAll();
-		panelContenedor.add(panelCliente);
-		panelContenedor.revalidate();
-		panelContenedor.repaint();
+	void cambiarPanelPrincipal() {
+		cambiarPanel(panelPrincipal);
+	}
+	
+	void cambiarPanelClienteIU() {
+		panelCliente.limpiarCampos();
+		clienteIU.cargarClientes();
+		cambiarPanel(clienteIU);
+	}
+	
+	void cambiarPanelRegistroCliente() {
+		cambiarPanel(panelCliente);
+	}
+
+	void cambiarPanelContratoIU() {	
+		cambiarPanel(contratoIU);
 	}
 }

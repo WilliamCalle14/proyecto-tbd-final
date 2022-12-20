@@ -12,7 +12,7 @@ public interface ICliente {
 	
 	public void modificar(int idCliente);
 	
-	public List<Cliente> listar();
+	public List<Cliente> listar() throws ClassNotFoundException, SQLException;
 	
 	public Cliente obtenerCliente(int idCliente);
 }

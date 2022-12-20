@@ -1,7 +1,9 @@
 package com.gui;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.interfaces.ICliente;
@@ -33,6 +35,7 @@ public class ClienteDB extends Conexion implements ICliente {
 			declaracion.executeUpdate();
 		}
 		
+		declaracion.close();
 		cerrarConexion();
 	}
 
@@ -49,9 +52,30 @@ public class ClienteDB extends Conexion implements ICliente {
 	}
 
 	@Override
-	public List<Cliente> listar() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cliente> listar() throws ClassNotFoundException, SQLException {
+		List<Cliente> clientes = null;
+		
+		iniciarConexion();
+		
+		PreparedStatement declaracion = conexion.prepareStatement(
+				"select * from cliente");
+		
+		clientes = new ArrayList<>();
+		
+		ResultSet resultados = declaracion.executeQuery();
+		
+		while (resultados.next()) {
+			Cliente cliente = new Cliente();
+			
+			cliente.setCiCliente(resultados.getInt("ci_cliente"));
+			cliente.setNombreCliente(resultados.getString("nombre_cliente"));
+			cliente.setDireccionCliente(resultados.getString("direccion_cliente"));
+			cliente.setTipoCliente(resultados.getString("tipo_cliente"));
+			
+			clientes.add(cliente);
+		}
+		
+		return clientes;
 	}
 
 	@Override

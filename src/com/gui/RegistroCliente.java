@@ -15,33 +15,31 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-class PanelCliente extends JPanel {
+class RegistroCliente extends JPanel {
 	private static final long serialVersionUID = 1L;
 	static final String COMANDO_CANCELAR = "CANCELAR-CLIENTE";
 	static final String COMANDO_GUARDAR = "GUARDAR-CLIENTE";
 	static final String COMANDO_CAMBIO_CLIENTE = "CAMBIO CLIENTE";
-	static final String COMANDO_ANIADIR = "ANIADIR-CLIENTE";
+	static final String COMANDO_ANIADIR_TELEFONO = "ANIADIR-TELEFONO-CLIENTE";
 	private String[] tiposCliente = {"Preferencial", "Normal"};
 	private JTextField campoIdCliente;
 	private JTextField campoNombre;
 	private JTextField campoDireccion;
-	private JTextField campoApellidos;
 	private JLabel etiquetaIdCliente;
 	private JLabel etiquetaNombre;
-	private JLabel etiquetaApellido;
 	private JTextField campoTelefono;
 	private JList<Object> listaTelefonos;
 	private DefaultListModel<Object> modelo;
 	private String clienteSeleccionado = "Preferencial";
 	
-	private ControlPanelBoton control;
+	private ControlMouse control;
 	private ControlComponentes controlComponentes;
 	
-	PanelCliente() {
+	RegistroCliente() {
 		setBounds(0, 0, 622, 379);
 		setLayout(null);
 		
-		control = ControlPanelBoton.obtenerInstancia();
+		control = ControlMouse.obtenerInstancia();
 		control.agregarPanelCliente(this);
 		
 		controlComponentes = ControlComponentes.obtenerInstancia();
@@ -76,7 +74,7 @@ class PanelCliente extends JPanel {
 					Integer.valueOf(campo.getText());
 				} catch (NumberFormatException e) {
 					if (!campo.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(PanelCliente.this, 
+						JOptionPane.showMessageDialog(RegistroCliente.this, 
 								"Este campo solo debe contener numeros",
 								"Entrada Incorrecta", JOptionPane.ERROR_MESSAGE);
 						return false;
@@ -107,17 +105,6 @@ class PanelCliente extends JPanel {
 		add(campoDireccion);
 		campoDireccion.setColumns(10);
 		
-		etiquetaApellido = new JLabel("Apellidos");
-		etiquetaApellido.setBounds(364, 109, 55, 16);
-		etiquetaApellido.setVisible(false);
-		add(etiquetaApellido);
-		
-		campoApellidos = new JTextField();
-		campoApellidos.setBounds(443, 103, 159, 28);
-		campoApellidos.setVisible(false);
-		add(campoApellidos);
-		campoApellidos.setColumns(10);
-		
 		JLabel etiquetaTelefono = new JLabel("Telefono");
 		etiquetaTelefono.setBounds(17, 199, 55, 16);
 		add(etiquetaTelefono);
@@ -132,7 +119,7 @@ class PanelCliente extends JPanel {
 					Integer.valueOf(campo.getText());
 				} catch (NumberFormatException e) {
 					if (!campo.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(PanelCliente.this, 
+						JOptionPane.showMessageDialog(RegistroCliente.this, 
 								"Este campo solo debe contener numeros",
 								"Entrada Incorrecta", JOptionPane.ERROR_MESSAGE);
 						return false;
@@ -167,18 +154,27 @@ class PanelCliente extends JPanel {
 	}
 	
 	void hacerBotones() {
-		Image imagenAniadir = Toolkit.getDefaultToolkit().getImage(PanelCliente.class.getResource("/resources/107078.png"));
-		JPanel panelBtnAniadir = FabricaPanelBoton.obtenerBotonConIcono(250, 193, 28, 28, 0, imagenAniadir, SystemColor.inactiveCaption, COMANDO_ANIADIR);
+		Image imagenAniadir = Toolkit.getDefaultToolkit().getImage(
+				RegistroCliente.class.getResource("/resources/107078.png"));
+		JPanel panelBtnAniadir = FabricaPanelBoton.obtenerBotonConIcono(
+				250, 193, 28, 28, 0, imagenAniadir, SystemColor.inactiveCaption,
+				COMANDO_ANIADIR_TELEFONO);
 		panelBtnAniadir.addMouseListener(control);
 		add(panelBtnAniadir);
 		
-		Image imagenGuardar = Toolkit.getDefaultToolkit().getImage(PanelCliente.class.getResource("/resources/747439.png"));
-		JPanel panelBtnGuardar = FabricaPanelBoton.obtenerBotonConIcono(560, 343, 30, 30, 0, imagenGuardar, SystemColor.inactiveCaption, COMANDO_GUARDAR);
+		Image imagenGuardar = Toolkit.getDefaultToolkit().getImage(
+				RegistroCliente.class.getResource("/resources/747439.png"));
+		JPanel panelBtnGuardar = FabricaPanelBoton.obtenerBotonConIcono(
+				560, 343, 30, 30, 0, imagenGuardar, SystemColor.inactiveCaption,
+				COMANDO_GUARDAR);
 		panelBtnGuardar.addMouseListener(control);
 		add(panelBtnGuardar);
 		
-		Image imagenCancelar = Toolkit.getDefaultToolkit().getImage(PanelCliente.class.getResource("/resources/545676.png"));
-		JPanel panelBtnCancelar = FabricaPanelBoton.obtenerBotonConIcono(515, 343, 30, 30, 0, imagenCancelar, SystemColor.inactiveCaption, COMANDO_CANCELAR);
+		Image imagenCancelar = Toolkit.getDefaultToolkit().getImage(
+				RegistroCliente.class.getResource("/resources/2140667.png"));
+		JPanel panelBtnCancelar = FabricaPanelBoton.obtenerBotonConIcono(
+				515, 343, 30, 30, 0, imagenCancelar, SystemColor.inactiveCaption,
+				COMANDO_CANCELAR);
 		panelBtnCancelar.addMouseListener(control);
 		add(panelBtnCancelar);
 	}
@@ -187,17 +183,13 @@ class PanelCliente extends JPanel {
 		clienteSeleccionado = tiposCliente[0];
 		etiquetaIdCliente.setText("NIT");
 		etiquetaNombre.setText("Nombre Empresa");
-		etiquetaApellido.setVisible(false);
-		campoApellidos.setVisible(false);
 		repaint();
 	}
 	
 	void cambiarPanelClienteNormal() {
 		clienteSeleccionado = tiposCliente[1];
-		etiquetaIdCliente.setText("CI");
-		etiquetaNombre.setText("Nombre");
-		etiquetaApellido.setVisible(true);
-		campoApellidos.setVisible(true);
+		etiquetaIdCliente.setText("Cedula Identidad");
+		etiquetaNombre.setText("Nombre Completo");
 		repaint();
 	}
 	
@@ -208,7 +200,6 @@ class PanelCliente extends JPanel {
 	void limpiarCampos() {
 		campoIdCliente.setText("");
 		campoNombre.setText("");
-		campoApellidos.setText("");
 		campoDireccion.setText("");
 		campoTelefono.setText("");
 		modelo.removeAllElements();
@@ -226,10 +217,6 @@ class PanelCliente extends JPanel {
 
 	JTextField getCampoDireccion() {
 		return campoDireccion;
-	}
-
-	JTextField getCampoApellidos() {
-		return campoApellidos;
 	}
 
 	Object[] getListaTelefonos() {

@@ -7,11 +7,11 @@ import javax.swing.JComboBox;
 
 class ControlComponentes implements ActionListener {
 	private static ControlComponentes control;
-	private PanelCliente panelCliente;
+	private RegistroCliente panelCliente;
 	
 	private ControlComponentes() {}
 	
-	void agregarPanelCliente(PanelCliente panelCliente) {
+	void agregarPanelCliente(RegistroCliente panelCliente) {
 		this.panelCliente = panelCliente;
 	}
 	
@@ -24,7 +24,7 @@ class ControlComponentes implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
-		if (comando.equals(PanelCliente.COMANDO_CAMBIO_CLIENTE)) {
+		if (comando.equals(RegistroCliente.COMANDO_CAMBIO_CLIENTE)) {
 			@SuppressWarnings("unchecked")
 			JComboBox<Object> comboBox = (JComboBox<Object>) e.getSource();
 			if (((String) comboBox.getSelectedItem()).equals(panelCliente.obtenerTiposCliente()[0]))
