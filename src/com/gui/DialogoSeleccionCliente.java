@@ -8,11 +8,11 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-class JDialogoSeleccionCliente extends JDialog {
+class DialogoSeleccionCliente extends JDialog {
     private static final long serialVersionUID = 1L;
     private TablaCliente tablaClientes;
 
-    public JDialogoSeleccionCliente(JPanel panel) {
+    public DialogoSeleccionCliente(JPanel panel) {
         super((JFrame) SwingUtilities.getWindowAncestor(panel),
                 "Seleccionar cliente", true);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

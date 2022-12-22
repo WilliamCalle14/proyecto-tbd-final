@@ -12,6 +12,8 @@ import com.sql.Conexion;
 
 public class IConductorImpl implements IConductor {
     private final String CONSULTA = "select * from conductor";
+    private final String OBTENER_UNO = "select * from conductor "
+            + "where ci_conductor = ?";
     
     private Conexion conexion;
     
@@ -47,15 +49,7 @@ public class IConductorImpl implements IConductor {
         while (resultados.next()) {
             Conductor conductor = new Conductor();
             
-            conductor.setCi(resultados.getInt(1));
-            conductor.setNroLicencia(resultados.getInt(2));
-            conductor.setCategoriaLicencia(resultados.getString(3));
-            conductor.setNombre(resultados.getString(4));
-            conductor.setTelefono(resultados.getString(5));
-            conductor.setDireccion(resultados.getString(6));
-            conductor.setEstado(resultados.getString(7));
-            conductor.setFechaVencimientoLicencia(resultados.getDate(8));
-            conductor.setFechaNacimiento(resultados.getDate(9));
+            setConductor(resultados, conductor);
             
             conductores.add(conductor);
         }
@@ -65,9 +59,35 @@ public class IConductorImpl implements IConductor {
         
         return conductores;
     }
+    
+    private void setConductor(ResultSet resultado, Conductor conductor) throws SQLException {
+        conductor.setCi(resultado.getInt(1));
+        conductor.setNroLicencia(resultado.getInt(2));
+        conductor.setCategoriaLicencia(resultado.getString(3));
+        conductor.setNombre(resultado.getString(4));
+        conductor.setTelefono(resultado.getString(5));
+        conductor.setDireccion(resultado.getString(6));
+        conductor.setEstado(resultado.getString(7));
+        conductor.setFechaVencimientoLicencia(resultado.getDate(8));
+        conductor.setFechaNacimiento(resultado.getDate(9));
+    }
 
     @Override
-    public Conductor obtener(Integer id) {
-        return null;
+    public Conductor obtener(Integer id) 
+            throws ClassNotFoundException, SQLException {
+        conexion.iniciarConexion();
+        
+        PreparedStatement declaracion = conexion.obtenerConexion()
+                .prepareStatement(OBTENER_UNO);
+        declaracion.setInt(1, id);
+        
+        Conductor conductor = new Conductor();
+        
+        setConductor(declaracion.executeQuery(), conductor);
+        
+        declaracion.close();
+        conexion.cerrarConexion();
+        
+        return conductor;
     }
 }

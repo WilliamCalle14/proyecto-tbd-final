@@ -69,7 +69,8 @@ class ControlMouse extends MouseAdapter {
     }
 
     private void buscarCliente() {
-        new JDialogoSeleccionCliente(registroContrato);
+        // new DialogoSeleccionCliente(registroContrato);
+        new DialogoSeleccionConductor(panelCliente);
     }
 
     private void guardarContrato() {

@@ -12,5 +12,5 @@ public interface IEntidad<T, K> {
     
     public List<T> listar() throws ClassNotFoundException, SQLException;
     
-    public T obtener(K id);
+    public T obtener(K id) throws ClassNotFoundException, SQLException;
 }

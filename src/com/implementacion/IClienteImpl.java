@@ -16,8 +16,8 @@ public class IClienteImpl implements ICliente {
             + " nombre_cliente, direccion_cliente, tipo_cliente) values (?, ?, ?, ?)";
 //    private final String MODIFICACION = "update cliente set nombre_cliente = ?,"
 //            + " direccion_cliente = ?, tipo_cliente = ? where ci_cliente = ?";
-//    private final String OBTENER_UNO = "select * from cliente "
-//            + "where ci_cliente = ?";
+    private final String OBTENER_UNO = "select * from cliente "
+            + "where ci_cliente = ?";
 //    private final String ELIMINACION = "delete from cliente "
 //            + "where ci_cliente = ?";
     private Conexion conexion;
@@ -58,10 +58,7 @@ public class IClienteImpl implements ICliente {
         while (resultados.next()) {
             Cliente cliente = new Cliente();
             
-            cliente.setCi(resultados.getInt(1));
-            cliente.setNombre(resultados.getString(2));
-            cliente.setDireccion(resultados.getString(3));
-            cliente.setTipo(resultados.getString(4));
+            setCliente(resultados, cliente);
 
             clientes.add(cliente);
         }
@@ -70,6 +67,14 @@ public class IClienteImpl implements ICliente {
         conexion.cerrarConexion();
 
         return clientes;
+    }
+
+    private void setCliente(ResultSet resultado, Cliente cliente)
+            throws SQLException {
+        cliente.setCi(resultado.getInt(1));
+        cliente.setNombre(resultado.getString(2));
+        cliente.setDireccion(resultado.getString(3));
+        cliente.setTipo(resultado.getString(4));
     }
 
     @Override
@@ -81,7 +86,19 @@ public class IClienteImpl implements ICliente {
     }
     
     @Override
-    public Cliente obtener(Integer idCliente) {
-        return null;
+    public Cliente obtener(Integer idCliente) throws ClassNotFoundException, SQLException {
+        conexion.iniciarConexion();
+        
+        PreparedStatement declaracion = conexion.obtenerConexion()
+                .prepareStatement(OBTENER_UNO);
+        
+        Cliente cliente = new Cliente();
+        
+        setCliente(declaracion.executeQuery(), cliente);
+        
+        declaracion.close();
+        conexion.cerrarConexion();
+        
+        return cliente;
     }
 }

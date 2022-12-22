@@ -25,6 +25,7 @@ class TablaContrato extends JTable {
                     String.class };
 
             @SuppressWarnings({ "unchecked", "rawtypes" })
+            @Override
             public Class getColumnClass(int idx) {
                 return tipos[idx];
             }
@@ -39,7 +40,7 @@ class TablaContrato extends JTable {
         setCellSelectionEnabled(false);
         setRowSelectionAllowed(false);
         getTableHeader().setReorderingAllowed(false);
-        // cargarContratos();
+        cargarContratos();
     }
     
     @Override
