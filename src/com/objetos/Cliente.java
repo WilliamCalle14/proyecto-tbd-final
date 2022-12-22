@@ -1,49 +1,40 @@
 package com.objetos;
 
 public class Cliente {
-	private int ciCliente;
-	private String nombreCliente;
-	private String direccionCliente;
-	private String tipoCliente;
-	private String[] telefonos;
+    private Integer ci;
+    private String nombre;
+    private String direccion;
+    private String tipo;
 
-	public int getCiCliente() {
-		return ciCliente;
-	}
+    public Integer getCi() {
+        return ci;
+    }
 
-	public void setCiCliente(int ciCliente) {
-		this.ciCliente = ciCliente;
-	}
+    public void setCi(Integer ci) {
+        this.ci = ci;
+    }
 
-	public String getNombreCliente() {
-		return nombreCliente;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setNombreCliente(String nombreCliente) {
-		this.nombreCliente = nombreCliente;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public String getDireccionCliente() {
-		return direccionCliente;
-	}
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public void setDireccionCliente(String direccionCliente) {
-		this.direccionCliente = direccionCliente;
-	}
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-	public String getTipoCliente() {
-		return tipoCliente;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setTipoCliente(String tipoCliente) {
-		this.tipoCliente = tipoCliente;
-	}
-
-	public String[] getTelefonos() {
-		return telefonos;
-	}
-
-	public void setTelefonos(String[] telefonos) {
-		this.telefonos = telefonos;
-	}
+    public void setTipo(String tipoCliente) {
+        this.tipo = tipoCliente;
+    }
 }
