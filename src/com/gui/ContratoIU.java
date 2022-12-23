@@ -13,8 +13,8 @@ class ContratoIU extends JPanel {
 
     static final String COMANDO_HOME = "HOME_CONTRATOIU";
     static final String COMANDO_ANIADIR = "ANIADIR_CONTRATOIU";
-    
-    private TablaContrato tablaContratos;
+
+    private JScrollPane scrollPane;
 
     private ControlMouse control;
 
@@ -28,11 +28,8 @@ class ContratoIU extends JPanel {
         etiquetaContratos.setBounds(276, 32, 74, 16);
         add(etiquetaContratos);
 
-        tablaContratos = new TablaContrato();
-
-        JScrollPane scrollPane = new JScrollPane();
+        scrollPane = new JScrollPane();
         scrollPane.setBounds(16, 60, 594, 230);
-        scrollPane.setViewportView(tablaContratos);
 
         add(scrollPane);
 
@@ -51,5 +48,11 @@ class ContratoIU extends JPanel {
                 COMANDO_HOME);
         panelBtnHome.addMouseListener(control);
         add(panelBtnHome);
+    }
+    
+    void mostrarTabla(TablaContrato tabla) {
+        scrollPane.setViewportView(tabla);
+        scrollPane.revalidate();
+        scrollPane.repaint();
     }
 }

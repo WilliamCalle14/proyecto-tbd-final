@@ -14,9 +14,9 @@ public class IConductorImpl implements IConductor {
     private final String CONSULTA = "select * from conductor";
     private final String OBTENER_UNO = "select * from conductor "
             + "where ci_conductor = ?";
-    
+
     private Conexion conexion;
-    
+
     public IConductorImpl() {
         conexion = Conexion.obtenerInstancia();
     }
@@ -38,29 +38,30 @@ public class IConductorImpl implements IConductor {
     public List<Conductor> listar()
             throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         List<Conductor> conductores = new ArrayList<>();
-        
+
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(CONSULTA);
-        
+
         ResultSet resultados = declaracion.executeQuery();
-        
+
         while (resultados.next()) {
             Conductor conductor = new Conductor();
-            
+
             setConductor(resultados, conductor);
-            
+
             conductores.add(conductor);
         }
-        
+
         declaracion.close();
         conexion.cerrarConexion();
-        
+
         return conductores;
     }
-    
-    private void setConductor(ResultSet resultado, Conductor conductor) throws SQLException {
+
+    private void setConductor(ResultSet resultado, Conductor conductor)
+            throws SQLException {
         conductor.setCi(resultado.getInt(1));
         conductor.setNroLicencia(resultado.getInt(2));
         conductor.setCategoriaLicencia(resultado.getString(3));
@@ -73,21 +74,27 @@ public class IConductorImpl implements IConductor {
     }
 
     @Override
-    public Conductor obtener(Integer id) 
+    public Conductor obtener(Integer id)
             throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(OBTENER_UNO);
         declaracion.setInt(1, id);
         
-        Conductor conductor = new Conductor();
+        ResultSet resultado = declaracion.executeQuery();
+
+        Conductor conductor;
         
-        setConductor(declaracion.executeQuery(), conductor);
-        
+        if (resultado.next()) {
+            conductor = new Conductor();
+            setConductor(resultado, conductor);
+        } else
+            conductor = null;
+
         declaracion.close();
         conexion.cerrarConexion();
-        
+
         return conductor;
     }
 }

@@ -2,17 +2,16 @@ package com.gui;
 
 import java.sql.SQLException;
 
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.implementacion.IClienteImpl;
+import com.objetos.Cliente;
 
-class TablaCliente extends JTable {
+class TablaCliente extends TablaEntidad<Cliente, Integer> {
     private static final long serialVersionUID = 1L;
+    private static TablaCliente tabla;
 
-    TablaCliente() {
-        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    private TablaCliente() {
         setModel(new DefaultTableModel(new Object[][] {},
                 new String[] { "CODIGO", "NOMBRE", "DIRECCION", "TIPO" }) {
             private static final long serialVersionUID = 1L;
@@ -24,45 +23,31 @@ class TablaCliente extends JTable {
             public Class getColumnClass(int idx) {
                 return tipos[idx];
             }
-            
+
             @Override
             public boolean isCellEditable(int n, int m) {
                 return false;
             }
         });
-        
-        getTableHeader().setReorderingAllowed(false);
-        // cargarClientes();
-        
-//        addFocusListener(new FocusListener() {
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//                setIgnoreRepaint(true);
-//            }
-//            
-//            @Override
-//            public void focusGained(FocusEvent e) {
-//                setIgnoreRepaint(false);
-//            }
-//        });
     }
     
-//    @Override
-//    public void paint(Graphics g) {
-//        super.paint(g);
-//        // if (!isFocusable())
-//        cargarClientes();
-//    }
-    
-    void cargarClientes() {
+    static TablaCliente obtenerInstancia() {
+        if (tabla == null)
+            tabla = new TablaCliente();
+        // tabla.cargarTabla();
+        return tabla;
+    }
+
+    @Override
+    void cargarTabla() {
         try {
             IClienteImpl clienteDB = new IClienteImpl();
             DefaultTableModel modelo = (DefaultTableModel) getModel();
-            
+
             modelo.setRowCount(0);
 
-            clienteDB.listar().forEach(
-                    (cliente) -> modelo.addRow(new Object[] {
+            clienteDB.listar()
+                    .forEach((cliente) -> modelo.addRow(new Object[] {
                             cliente.getCi(), cliente.getNombre(),
                             cliente.getDireccion(), cliente.getTipo() }));
         } catch (SQLException | ClassNotFoundException e) {

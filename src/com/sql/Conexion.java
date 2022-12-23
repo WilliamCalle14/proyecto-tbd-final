@@ -13,10 +13,11 @@ public class Conexion {
 
     private Conexion() {
         this.usuario = "root";
-        this.contrasena = "mysql4080";
+        // this.contrasena = "mysql4080";
+        this.contrasena = "devprocp981#$";
         nombreBDUrl = "jdbc:mysql://localhost/Trans_Bolivia";
     }
-    
+
     public static Conexion obtenerInstancia() {
         if (miConexion == null)
             miConexion = new Conexion();
@@ -28,7 +29,7 @@ public class Conexion {
         conexion = DriverManager.getConnection(nombreBDUrl, usuario,
                 contrasena);
     }
-    
+
     public Connection obtenerConexion() {
         return conexion;
     }

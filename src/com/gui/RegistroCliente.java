@@ -51,7 +51,7 @@ class RegistroCliente extends JPanel {
 
     void hacerPanelBase() {
         JLabel etiquetaTipoCliente = new JLabel("Tipo de cliente");
-        etiquetaTipoCliente.setBounds(17, 19, 80, 16);
+        etiquetaTipoCliente.setBounds(17, 19, 108, 16);
         add(etiquetaTipoCliente);
 
         JComboBox<Object> comboBoxTipoCliente = new JComboBox<Object>(
@@ -168,16 +168,16 @@ class RegistroCliente extends JPanel {
 
         Image imagenGuardar = Toolkit.getDefaultToolkit().getImage(
                 RegistroCliente.class.getResource("/resources/747439.png"));
-        JPanel panelBtnGuardar = FabricaPanelBoton.obtenerBotonConIcono(560,
-                343, 30, 30, 0, imagenGuardar, SystemColor.inactiveCaption,
+        JPanel panelBtnGuardar = FabricaPanelBoton.obtenerBotonConIcono(538,
+                315, 30, 30, 0, imagenGuardar, SystemColor.inactiveCaption,
                 COMANDO_GUARDAR);
         panelBtnGuardar.addMouseListener(control);
         add(panelBtnGuardar);
 
         Image imagenCancelar = Toolkit.getDefaultToolkit().getImage(
                 RegistroCliente.class.getResource("/resources/2140667.png"));
-        JPanel panelBtnCancelar = FabricaPanelBoton.obtenerBotonConIcono(515,
-                343, 30, 30, 0, imagenCancelar, SystemColor.inactiveCaption,
+        JPanel panelBtnCancelar = FabricaPanelBoton.obtenerBotonConIcono(496,
+                315, 30, 30, 0, imagenCancelar, SystemColor.inactiveCaption,
                 COMANDO_CANCELAR);
         panelBtnCancelar.addMouseListener(control);
         add(panelBtnCancelar);

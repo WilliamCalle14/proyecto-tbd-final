@@ -21,7 +21,7 @@ public class IClienteImpl implements ICliente {
 //    private final String ELIMINACION = "delete from cliente "
 //            + "where ci_cliente = ?";
     private Conexion conexion;
-    
+
     public IClienteImpl() {
         conexion = Conexion.obtenerInstancia();
     }
@@ -47,8 +47,8 @@ public class IClienteImpl implements ICliente {
     @Override
     public List<Cliente> listar() throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
-        List<Cliente> clientes = new ArrayList<>();;
+
+        List<Cliente> clientes = new ArrayList<>();
 
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(CONSULTA);
@@ -57,12 +57,12 @@ public class IClienteImpl implements ICliente {
 
         while (resultados.next()) {
             Cliente cliente = new Cliente();
-            
+
             setCliente(resultados, cliente);
 
             clientes.add(cliente);
         }
-        
+
         declaracion.close();
         conexion.cerrarConexion();
 
@@ -84,21 +84,29 @@ public class IClienteImpl implements ICliente {
     @Override
     public void modificar(Cliente entidad, Integer id) {
     }
-    
+
     @Override
-    public Cliente obtener(Integer idCliente) throws ClassNotFoundException, SQLException {
+    public Cliente obtener(Integer idCliente)
+            throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(OBTENER_UNO);
+        declaracion.setInt(1, idCliente);
         
-        Cliente cliente = new Cliente();
+        ResultSet resultado = declaracion.executeQuery();
         
-        setCliente(declaracion.executeQuery(), cliente);
+        Cliente cliente;
         
+        if (resultado.next()) {
+            cliente = new Cliente();
+            setCliente(resultado, cliente);
+        } else
+            cliente = null;
+
         declaracion.close();
         conexion.cerrarConexion();
-        
+
         return cliente;
     }
 }

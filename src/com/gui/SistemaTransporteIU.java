@@ -8,7 +8,7 @@ public class SistemaTransporteIU extends JFrame {
     private JPanel panelContenedor;
     private PanelPrincipal panelPrincipal;
     private ClienteIU clienteIU;
-    private RegistroCliente panelCliente;
+    private RegistroCliente registroCliente;
     private ContratoIU contratoIU;
     private RegistroContrato registroContrato;
 
@@ -25,7 +25,7 @@ public class SistemaTransporteIU extends JFrame {
         control = ControlMouse.obtenerInstancia();
         control.agregarSistema(this);
         panelPrincipal = new PanelPrincipal();
-        panelCliente = new RegistroCliente();
+        registroCliente = new RegistroCliente();
         clienteIU = new ClienteIU();
         contratoIU = new ContratoIU();
         registroContrato = new RegistroContrato();
@@ -53,21 +53,26 @@ public class SistemaTransporteIU extends JFrame {
     }
 
     void cambiarPanelClienteIU() {
-        clienteIU.cargarClientes();
+        TablaCliente tabla = TablaCliente.obtenerInstancia();
+        tabla.cargarTabla();
+        clienteIU.mostrarTabla(tabla);
         cambiarPanel(clienteIU);
     }
 
     void cambiarPanelRegistroCliente() {
-        panelCliente.limpiarCampos();
-        cambiarPanel(panelCliente);
+        registroCliente.limpiarCampos();
+        cambiarPanel(registroCliente);
     }
 
     void cambiarPanelContratoIU() {
+        TablaContrato tabla = TablaContrato.obtenerInstancia();
+        tabla.cargarContratos();
+        contratoIU.mostrarTabla(tabla);
         cambiarPanel(contratoIU);
     }
-    
-    void cambiarPanelRegistroContrato() {
-        cambiarPanel(registroContrato);
 
+    void cambiarPanelRegistroContrato() {
+        registroContrato.registrarCliente();
+        cambiarPanel(registroContrato);
     }
 }

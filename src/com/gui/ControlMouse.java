@@ -4,24 +4,32 @@ import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.implementacion.IClienteImpl;
+import com.implementacion.IContratoImpl;
+import com.implementacion.IEmpleadoImpl;
 import com.implementacion.ITelefonoClienteImpl;
 import com.objetos.Cliente;
+import com.objetos.Conductor;
+import com.objetos.Contrato;
+import com.objetos.Empleado;
+import com.objetos.Ruta;
 import com.objetos.TelefonoCliente;
+import com.objetos.Vehiculo;
 
 class ControlMouse extends MouseAdapter {
     private static ControlMouse control;
 
     private SistemaTransporteIU sistema;
-    private RegistroCliente panelCliente;
+    private RegistroCliente registroCliente;
     private RegistroContrato registroContrato;
 
-    private ControlMouse() {
-    }
+    private ControlMouse() {}
 
     static ControlMouse obtenerInstancia() {
         if (control == null)
@@ -34,9 +42,9 @@ class ControlMouse extends MouseAdapter {
     }
 
     void agregarPanelCliente(RegistroCliente panelCliente) {
-        this.panelCliente = panelCliente;
+        this.registroCliente = panelCliente;
     }
-    
+
     void agregarRegistroContrato(RegistroContrato registroContrato) {
         this.registroContrato = registroContrato;
     }
@@ -55,25 +63,106 @@ class ControlMouse extends MouseAdapter {
             sistema.cambiarPanelContratoIU();
         else if (nombre.equals(ClienteIU.COMANDO_ANIADIR))
             sistema.cambiarPanelRegistroCliente();
+        else if (nombre.equals(ClienteIU.COMANDO_MODIFICAR))
+            System.out.println(TablaCliente.obtenerInstancia()
+                    .obtenerEntidadSeleccionada(new IClienteImpl()));
         else if (nombre.equals(ContratoIU.COMANDO_ANIADIR))
             sistema.cambiarPanelRegistroContrato();
         else if (nombre.equals(RegistroCliente.COMANDO_ANIADIR_TELEFONO))
-            panelCliente.agregarTelefonoAlista();
+            registroCliente.agregarTelefonoAlista();
         else if (nombre.equals(RegistroCliente.COMANDO_GUARDAR))
             agregarCliente();
         else if (nombre.equals(RegistroContrato.COMANDO_GUARDAR))
             guardarContrato();
         else if (nombre.equals(RegistroContrato.COMANDO_BUSCAR_CLIENTE))
-            buscarCliente();
+            registroContrato.mostrarDialogoCliente();
+        else if (nombre.equals(RegistroContrato.COMANDO_BUSCAR_CONDUCTOR))
+            registroContrato.mostrarDialogoConductor();
+        else if (nombre.equals(RegistroContrato.COMANDO_BUSCAR_DESTINO))
+            registroContrato.mostrarDialogoRuta();
+        else if (nombre.equals(RegistroContrato.COMANDO_BUSCAR_VEHICULO))
+            registroContrato.mostrarDialogoVehiculo();
         e.getComponent().setBackground(SystemColor.inactiveCaption);
     }
-
-    private void buscarCliente() {
-        // new DialogoSeleccionCliente(registroContrato);
-        new DialogoSeleccionConductor(panelCliente);
+    
+    private void mostrarMensajeCamposVacios(JPanel origen) {
+        JOptionPane.showMessageDialog(origen,
+                "Algunos campos estan vacios", "Campos vacios",
+                JOptionPane.ERROR_MESSAGE);
     }
 
     private void guardarContrato() {
+        Cliente cliente = registroContrato.getCliente();
+        
+        if (cliente == null) {
+            mostrarMensajeCamposVacios(registroContrato);
+            return;
+        }
+        
+        Conductor conductor = registroContrato.getConductor();
+        
+        if (conductor == null) {
+            mostrarMensajeCamposVacios(registroContrato);
+            return;
+        }
+        
+        Vehiculo vehiculo = registroContrato.getVehiculo();
+        
+        if (vehiculo == null) {
+            mostrarMensajeCamposVacios(registroContrato);
+            return;
+        }
+        
+        Date fechaSalida = registroContrato.getFechaSalida().getDate();
+        
+        if (fechaSalida == null) {
+            mostrarMensajeCamposVacios(registroContrato);
+            return;
+        }
+        
+        Ruta ruta = registroContrato.getRuta();
+        
+        if (ruta == null) {
+            mostrarMensajeCamposVacios(registroContrato);
+            return;
+        }
+        
+        String tmp = validarCampo(registroContrato.getCampoMontoTotal(),
+                registroContrato);
+        
+        if (tmp == null)
+            return;
+        
+        float montoTotal = Float.parseFloat(tmp);
+        
+        try {
+            IEmpleadoImpl empleadoDB = new IEmpleadoImpl();
+            Empleado empleado = empleadoDB.obtener(2097480);
+        
+            Contrato contrato = new Contrato();
+            
+            contrato.setIdRuta(ruta.getId());
+            contrato.setCiConductor(conductor.getCi());
+            contrato.setPlaca(vehiculo.getPlaca());
+            contrato.setCiCliente(cliente.getCi());
+            contrato.setCiEmpleado(empleado.getCi());
+            contrato.setNitSucursal(empleado.getNitSucursal());
+            contrato.setFechaRegContrato(
+                    new java.sql.Date(new Date().getTime()));
+            contrato.setFechaSalida(new java.sql.Date(fechaSalida.getTime()));
+            contrato.setMontoTotal(montoTotal);
+            
+            IContratoImpl contratoDB = new IContratoImpl();
+            
+            contratoDB.insertar(contrato);
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(registroContrato, e.toString(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        registroContrato.limpiarCampos();
+        JOptionPane.showMessageDialog(registroContrato, "Contrato registrado");
     }
 
     private void agregarCliente() {
@@ -82,58 +171,58 @@ class ControlMouse extends MouseAdapter {
 
         cliente = new Cliente();
 
-        tmp = validarCampo(panelCliente.getCampoIdCliente());
+        tmp = validarCampo(registroCliente.getCampoIdCliente(),
+                registroCliente);
         cliente.setCi(Integer.valueOf(tmp));
 
-        tmp = validarCampo(panelCliente.getCampoNombre());
+        tmp = validarCampo(registroCliente.getCampoNombre(), registroCliente);
         if (tmp == null)
             return;
         cliente.setNombre(tmp);
 
-        cliente.setTipo("PREFERENCIAL");
+        cliente.setTipo("Preferencial");
 
-        if (panelCliente.getClienteSeleccionado()
-                .equals(panelCliente.obtenerTiposCliente()[1]))
-            cliente.setTipo("NORMAL");
+        if (registroCliente.getClienteSeleccionado()
+                .equals(registroCliente.obtenerTiposCliente()[1]))
+            cliente.setTipo("Normal");
 
-        tmp = validarCampo(panelCliente.getCampoDireccion());
+        tmp = validarCampo(registroCliente.getCampoDireccion(),
+                registroCliente);
         if (tmp == null)
             return;
         cliente.setDireccion(tmp);
 
-        Object[] objs = panelCliente.getListaTelefonos();
+        Object[] objs = registroCliente.getListaTelefonos();
         String[] telefonos = new String[objs.length];
 
         for (int i = 0; i < objs.length; i++)
             telefonos[i] = (String) objs[i];
-        
+
         TelefonoCliente telefonoCliente = new TelefonoCliente();
-        
+
         telefonoCliente.setCiCliente(cliente.getCi());
         telefonoCliente.setTelefonos(telefonos);
 
         IClienteImpl clienteDB = new IClienteImpl();
         ITelefonoClienteImpl telefonoClienteDB = new ITelefonoClienteImpl();
-        
+
         try {
             clienteDB.insertar(cliente);
             telefonoClienteDB.insertar(telefonoCliente);
         } catch (ClassNotFoundException | SQLException e1) {
-            JOptionPane.showMessageDialog(panelCliente, e1.getMessage(),
+            JOptionPane.showMessageDialog(registroCliente, e1.getMessage(),
                     "Error al guardar", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        panelCliente.limpiarCampos();
-        JOptionPane.showMessageDialog(panelCliente, "Cliente guardado");
+
+        registroCliente.limpiarCampos();
+        JOptionPane.showMessageDialog(registroCliente, "Cliente guardado");
     }
 
-    private String validarCampo(JTextField campo) {
+    private String validarCampo(JTextField campo, JPanel panel) {
         String texto = campo.getText();
         if (texto.isEmpty()) {
-            JOptionPane.showMessageDialog(panelCliente,
-                    "Algunos campos estan vacios", "Campos Vacios",
-                    JOptionPane.ERROR_MESSAGE);
+            mostrarMensajeCamposVacios(panel);
             return null;
         }
         return texto;

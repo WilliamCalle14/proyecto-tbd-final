@@ -16,20 +16,21 @@ public class IContratoImpl implements IContrato {
             + "ci_conductor, placa, ci_cliente, ci_empleado, nit_sucursal, "
             + "fecha_reg_contrato, fecha_salida, fecha_llegada, monto_total)"
             + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
+
     private Conexion conexion;
-    
+
     public IContratoImpl() {
         conexion = Conexion.obtenerInstancia();
     }
-    
+
     @Override
-    public void insertar(Contrato contrato) throws ClassNotFoundException, SQLException {
+    public void insertar(Contrato contrato)
+            throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(INSERCION);
-        
+
         declaracion.setInt(1, contrato.getIdRuta());
         declaracion.setInt(2, contrato.getCiConductor());
         declaracion.setString(3, contrato.getPlaca());
@@ -41,24 +42,27 @@ public class IContratoImpl implements IContrato {
         declaracion.setDate(9, contrato.getFechaLlegada());
         declaracion.setFloat(10, contrato.getMontoTotal());
         
+        declaracion.executeUpdate();
+
         declaracion.close();
-        
+
         conexion.cerrarConexion();
     }
 
     @Override
     public List<Contrato> listar() throws SQLException, ClassNotFoundException {
         conexion.iniciarConexion();
-        
+
         List<Contrato> contratos = new ArrayList<>();
-        
-        PreparedStatement declaracion = conexion.obtenerConexion().prepareStatement(CONSULTA);
-        
+
+        PreparedStatement declaracion = conexion.obtenerConexion()
+                .prepareStatement(CONSULTA);
+
         ResultSet resultados = declaracion.executeQuery();
-        
+
         while (resultados.next()) {
             Contrato contrato = new Contrato();
-            
+
             contrato.setIdRuta(resultados.getInt(1));
             contrato.setCiConductor(resultados.getInt(2));
             contrato.setPlaca(resultados.getString(3));
@@ -69,13 +73,13 @@ public class IContratoImpl implements IContrato {
             contrato.setFechaSalida(resultados.getDate(8));
             contrato.setFechaLlegada(resultados.getDate(9));
             contrato.setMontoTotal(resultados.getFloat(10));
-            
+
             contratos.add(contrato);
         }
-        
+
         declaracion.close();
         conexion.cerrarConexion();
-        
+
         return contratos;
     }
 }

@@ -11,9 +11,9 @@ import com.sql.Conexion;
 public class ITelefonoClienteImpl implements ITelefonoCliente {
     private final String INSERCION = "insert into telefono_cliente "
             + "(ci_cliente, telefono_cliente) values (?, ?)";
-    
+
     private Conexion conexion;
-    
+
     public ITelefonoClienteImpl() {
         conexion = Conexion.obtenerInstancia();
     }
@@ -26,18 +26,18 @@ public class ITelefonoClienteImpl implements ITelefonoCliente {
     public void insertar(TelefonoCliente entidad)
             throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         for (String telefono : entidad.getTelefonos()) {
             PreparedStatement declaracion = conexion.obtenerConexion()
                     .prepareStatement(INSERCION);
-            
+
             declaracion.setInt(1, entidad.getCiCliente());
             declaracion.setString(2, telefono);
-            
+
             declaracion.executeUpdate();
             declaracion.close();
         }
-        
+
         conexion.cerrarConexion();
     }
 

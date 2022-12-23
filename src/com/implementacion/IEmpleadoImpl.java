@@ -12,9 +12,9 @@ import com.sql.Conexion;
 public class IEmpleadoImpl implements IEmpleado {
     private final String OBTENER_UNO = "select * from empleado"
             + " where ci_empleado = ?";
-    
+
     private Conexion conexion;
-    
+
     public IEmpleadoImpl() {
         conexion = Conexion.obtenerInstancia();
     }
@@ -36,29 +36,37 @@ public class IEmpleadoImpl implements IEmpleado {
     public List<Empleado> listar() throws ClassNotFoundException, SQLException {
         return null;
     }
+    
+    private void setEmpleado(ResultSet resultado, Empleado empleado)
+            throws SQLException {
+        empleado.setCi(resultado.getInt(1));
+        empleado.setNitSucursal(resultado.getInt(2));
+        empleado.setNombre(resultado.getString(3));
+        empleado.setDireccion(resultado.getString(4));
+    }
 
     @Override
     public Empleado obtener(Integer id)
             throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(OBTENER_UNO);
         declaracion.setInt(1, id);
-        
+
         ResultSet resultado = declaracion.executeQuery();
-        
-        Empleado empleado = new Empleado();
-        
-        empleado.setCi(resultado.getInt(1));
-        empleado.setNitSucursal(resultado.getInt(2));
-        empleado.setNombre(resultado.getString(3));
-        empleado.setDireccion(resultado.getString(4));
-        
+
+        Empleado empleado;
+
+        if (resultado.next()) {
+            empleado = new Empleado();
+            setEmpleado(resultado, empleado);
+        } else
+            empleado = null;
+
         declaracion.close();
         conexion.cerrarConexion();
-        
+
         return empleado;
     }
-
 }

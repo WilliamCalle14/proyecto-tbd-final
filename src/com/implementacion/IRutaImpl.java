@@ -13,9 +13,9 @@ import com.sql.Conexion;
 public class IRutaImpl implements IRuta {
     private final String CONSULTA = "select * from ruta";
     private final String OBTENER_UNO = "select * from ruta where id_ruta = ?";
-    
+
     private Conexion conexion;
-    
+
     public IRutaImpl() {
         conexion = Conexion.obtenerInstancia();
     }
@@ -36,27 +36,27 @@ public class IRutaImpl implements IRuta {
     @Override
     public List<Ruta> listar() throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         List<Ruta> rutas = new ArrayList<>();
-        
+
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(CONSULTA);
         ResultSet resultados = declaracion.executeQuery();
-        
+
         while (resultados.next()) {
             Ruta ruta = new Ruta();
-            
+
             setRuta(resultados, ruta);
-            
+
             rutas.add(ruta);
         }
-        
+
         declaracion.close();
         conexion.cerrarConexion();
-        
+
         return rutas;
     }
-    
+
     private void setRuta(ResultSet resultado, Ruta ruta) throws SQLException {
         ruta.setId(resultado.getInt(1));
         ruta.setDestino(resultado.getString(2));
@@ -67,21 +67,27 @@ public class IRutaImpl implements IRuta {
     }
 
     @Override
-    public Ruta obtener(Integer id) throws ClassNotFoundException, SQLException {
+    public Ruta obtener(Integer id)
+            throws ClassNotFoundException, SQLException {
         conexion.iniciarConexion();
-        
+
         PreparedStatement declaracion = conexion.obtenerConexion()
                 .prepareStatement(OBTENER_UNO);
-        
         declaracion.setInt(1, id);
         
-        Ruta ruta = new Ruta();
+        ResultSet resultado = declaracion.executeQuery();
+
+        Ruta ruta;
         
-        setRuta(declaracion.executeQuery(), ruta);
-        
+        if (resultado.next()) {
+            ruta = new Ruta();
+            setRuta(resultado, ruta);
+        } else
+            ruta = null;
+
         declaracion.close();
         conexion.cerrarConexion();
-        
+
         return ruta;
     }
 }
