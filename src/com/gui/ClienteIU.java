@@ -39,13 +39,13 @@ class ClienteIU extends JPanel {
 
         add(scrollPane);
         
-        Image iconoModificar = Toolkit.getDefaultToolkit()
-                .getImage(ClienteIU.class.getResource("/resources/5436090.png"));
-        JPanel panelBtnModificar = FabricaPanelBoton.obtenerBotonConIcono(496,
-                315, 30, 30, 0, iconoModificar, SystemColor.inactiveCaption,
-                COMANDO_MODIFICAR);
-        panelBtnModificar.addMouseListener(control);
-        add(panelBtnModificar);
+//        Image iconoModificar = Toolkit.getDefaultToolkit()
+//                .getImage(ClienteIU.class.getResource("/resources/5436090.png"));
+//        JPanel panelBtnModificar = FabricaPanelBoton.obtenerBotonConIcono(496,
+//                315, 30, 30, 0, iconoModificar, SystemColor.inactiveCaption,
+//                COMANDO_MODIFICAR);
+//        panelBtnModificar.addMouseListener(control);
+//        add(panelBtnModificar);
 
         Image iconoAniadir = Toolkit.getDefaultToolkit()
                 .getImage(ClienteIU.class.getResource("/resources/3631618.png"));

@@ -51,8 +51,8 @@ class TablaConductor extends TablaEntidad<Conductor, Integer> {
             conductorDB.listar()
                     .forEach((conductor) -> modelo.addRow(new Object[] {
                             conductor.getCi(), conductor.getNroLicencia(),
-                            conductor.getEstado(), conductor.getNombre(),
-                            conductor.getEstado() }));
+                            conductor.getCategoriaLicencia(),
+                            conductor.getNombre(), conductor.getEstado() }));
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }

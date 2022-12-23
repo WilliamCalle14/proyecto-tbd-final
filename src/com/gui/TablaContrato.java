@@ -18,8 +18,8 @@ class TablaContrato extends JTable {
 
     private TablaContrato() {
         setModel(new DefaultTableModel(new Object[][] {},
-                new String[] { "DESTINO", "CLIENTE", "CONDUCTOR", "VEHICULO",
-                        "EMPLEADO", "FECHA SALIDA", "FECHA LLEGADA",
+                new String[] { "CLIENTE", "CONDUCTOR", "VEHICULO",
+                        "EMPLEADO", "RUTA", "FECHA SALIDA", "FECHA LLEGADA",
                         "MONTO TOTAL" }) {
             private static final long serialVersionUID = 1L;
 
@@ -58,11 +58,6 @@ class TablaContrato extends JTable {
 //            DefaultTableModel modelo = (DefaultTableModel) getModel();
 //
 //            modelo.setRowCount(0);
-//            
-//            // "CLIENTE", "CONDUCTOR", 
-//            // "VEHICULO", "EMPLEADO",
-//            // "DESTINO", "FECHA SALIDA",
-//            // "FECHA LLEGADA", "MONTO TOTAL"
 //
 //            contratoDB.listar()
 //                    .forEach((contrato) -> modelo.addRow(new Object[] {

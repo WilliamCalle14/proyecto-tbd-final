@@ -104,12 +104,12 @@ class RegistroContrato extends JPanel {
         add(campoMontoTotal);
 
         fechaSalida = new JDateChooser();
-        fechaSalida.setDateFormatString("dd-mm-yyyy");
+//        fechaSalida.setDateFormatString("dd-mm-yyyy");
         fechaSalida.setBounds(94, 177, 135, 28);
         add(fechaSalida);
 
         fechaLlegada = new JDateChooser();
-        fechaLlegada.setDateFormatString("dd-mm-yyyy");
+//        fechaLlegada.setDateFormatString("dd-mm-yyyy");
         fechaLlegada.setBounds(428, 177, 135, 28);
         add(fechaLlegada);
 
