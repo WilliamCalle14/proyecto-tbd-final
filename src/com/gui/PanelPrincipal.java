@@ -20,7 +20,7 @@ class PanelPrincipal extends JPanel {
         control = ControlMouse.obtenerInstancia();
 
         Image imagenCliente = Toolkit.getDefaultToolkit().getImage(
-                PanelPrincipal.class.getResource("/resources/3126649.png"));
+                PanelPrincipal.class.getResource("/resources/2143272.png"));
         JPanel panelBtnCliente = FabricaPanelBoton.obtenerBotonConIconoTexto(51,
                 118, 128, 143, 6, imagenCliente, "Clientes",
                 SystemColor.inactiveCaption, ID_PANEL_CLIENTE);
@@ -28,7 +28,7 @@ class PanelPrincipal extends JPanel {
         add(panelBtnCliente);
 
         Image imagenContrato = Toolkit.getDefaultToolkit().getImage(
-                PanelPrincipal.class.getResource("/resources/1429239.png"));
+                PanelPrincipal.class.getResource("/resources/1518645.png"));
         JPanel panelBtnContrato = FabricaPanelBoton.obtenerBotonConIconoTexto(
                 247, 118, 128, 143, 6, imagenContrato, "Contratos",
                 SystemColor.inactiveCaption, ID_PANEL_CONTRATO);

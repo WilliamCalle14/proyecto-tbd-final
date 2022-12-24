@@ -38,14 +38,6 @@ class ClienteIU extends JPanel {
         scrollPane.setBounds(16, 60, 594, 230);
 
         add(scrollPane);
-        
-//        Image iconoModificar = Toolkit.getDefaultToolkit()
-//                .getImage(ClienteIU.class.getResource("/resources/5436090.png"));
-//        JPanel panelBtnModificar = FabricaPanelBoton.obtenerBotonConIcono(496,
-//                315, 30, 30, 0, iconoModificar, SystemColor.inactiveCaption,
-//                COMANDO_MODIFICAR);
-//        panelBtnModificar.addMouseListener(control);
-//        add(panelBtnModificar);
 
         Image iconoAniadir = Toolkit.getDefaultToolkit()
                 .getImage(ClienteIU.class.getResource("/resources/3631618.png"));
@@ -56,7 +48,7 @@ class ClienteIU extends JPanel {
         add(panelBtnAniadir);
 
         Image iconoHome = Toolkit.getDefaultToolkit().getImage(
-                ClienteIU.class.getResource("/resources/4103187.png"));
+                ClienteIU.class.getResource("/resources/4407435.png"));
         JPanel panelBtnHome = FabricaPanelBoton.obtenerBotonConIcono(49, 315,
                 30, 30, 0, iconoHome, SystemColor.inactiveCaption,
                 COMANDO_HOME);

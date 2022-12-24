@@ -177,7 +177,7 @@ class RegistroContrato extends JPanel {
         add(panelBtnBuscarDestino);
 
         Image imagenGuardar = Toolkit.getDefaultToolkit().getImage(
-                RegistroContrato.class.getResource("/resources/747439.png"));
+                RegistroContrato.class.getResource("/resources/2874091.png"));
         JPanel panelBtnGuardar = FabricaPanelBoton.obtenerBotonConIcono(538,
                 315, 30, 30, 0, imagenGuardar, SystemColor.inactiveCaption,
                 COMANDO_GUARDAR);
@@ -185,7 +185,7 @@ class RegistroContrato extends JPanel {
         add(panelBtnGuardar);
 
         Image imagenCancelar = Toolkit.getDefaultToolkit().getImage(
-                RegistroContrato.class.getResource("/resources/2140667.png"));
+                RegistroContrato.class.getResource("/resources/2549867.png"));
         JPanel panelBtnCancelar = FabricaPanelBoton.obtenerBotonConIcono(496,
                 315, 30, 30, 0, imagenCancelar, SystemColor.inactiveCaption,
                 COMANDO_CANCELAR);

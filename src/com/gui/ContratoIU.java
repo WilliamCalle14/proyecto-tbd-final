@@ -42,7 +42,7 @@ class ContratoIU extends JPanel {
         add(panelBtnAniadir);
 
         Image iconoHome = Toolkit.getDefaultToolkit().getImage(
-                ClienteIU.class.getResource("/resources/4103187.png"));
+                ClienteIU.class.getResource("/resources/4407435.png"));
         JPanel panelBtnHome = FabricaPanelBoton.obtenerBotonConIcono(49, 315,
                 30, 30, 0, iconoHome, SystemColor.inactiveCaption,
                 COMANDO_HOME);

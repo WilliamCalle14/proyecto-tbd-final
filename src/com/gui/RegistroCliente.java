@@ -159,7 +159,7 @@ class RegistroCliente extends JPanel {
 
     void hacerBotones() {
         Image imagenAniadir = Toolkit.getDefaultToolkit().getImage(
-                RegistroCliente.class.getResource("/resources/107078.png"));
+                RegistroCliente.class.getResource("/resources/2740600.png"));
         JPanel panelBtnAniadir = FabricaPanelBoton.obtenerBotonConIcono(260,
                 193, 28, 28, 0, imagenAniadir, SystemColor.inactiveCaption,
                 COMANDO_ANIADIR_TELEFONO);
@@ -167,7 +167,7 @@ class RegistroCliente extends JPanel {
         add(panelBtnAniadir);
 
         Image imagenGuardar = Toolkit.getDefaultToolkit().getImage(
-                RegistroCliente.class.getResource("/resources/747439.png"));
+                RegistroCliente.class.getResource("/resources/2874091.png"));
         JPanel panelBtnGuardar = FabricaPanelBoton.obtenerBotonConIcono(538,
                 315, 30, 30, 0, imagenGuardar, SystemColor.inactiveCaption,
                 COMANDO_GUARDAR);
@@ -175,7 +175,7 @@ class RegistroCliente extends JPanel {
         add(panelBtnGuardar);
 
         Image imagenCancelar = Toolkit.getDefaultToolkit().getImage(
-                RegistroCliente.class.getResource("/resources/2140667.png"));
+                RegistroCliente.class.getResource("/resources/2549867.png"));
         JPanel panelBtnCancelar = FabricaPanelBoton.obtenerBotonConIcono(496,
                 315, 30, 30, 0, imagenCancelar, SystemColor.inactiveCaption,
                 COMANDO_CANCELAR);
